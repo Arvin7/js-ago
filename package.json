@@ -1,0 +1,24 @@
+{
+  "name": "js-ago",
+  "version": "1.0.0",
+  "description": "Simple time ago based on UNIX timestamp",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Arvin7/js-ago.git"
+  },
+  "keywords": [
+    "javascript",
+    "time",
+    "ago"
+  ],
+  "author": "Arvin Ashtari <arvin@windesign.ir>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Arvin7/js-ago/issues"
+  },
+  "homepage": "https://github.com/Arvin7/js-ago#readme"
+}
