@@ -1,2 +1,2 @@
 # js-ago
-Simple "time" ago based on UNIX timestamp
+Simple "time" ago for your UNIX timestamps

@@ -1,0 +1,14 @@
+{
+	"root": true,
+	"env": {
+		"browser": true
+	},
+	"extends": "eslint:recommended",
+	"parserOptions": {
+		"ecmaVersion": 11,
+		"sourceType": "module"
+	},
+	"rules": {
+		"prefer-const": "error"
+	}
+}
