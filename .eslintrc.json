@@ -5,10 +5,15 @@
 	},
 	"extends": "eslint:recommended",
 	"parserOptions": {
-		"ecmaVersion": 11,
-		"sourceType": "module"
+		"ecmaVersion": 6,
+		"sourceType": "module",
+		"ecmaFeatures": {
+			"jsx": true
+		}
 	},
 	"rules": {
+		"no-unused-vars": "warn",
 		"prefer-const": "error"
-	}
+	},
+	"plugins": ["markdown"]
 }
