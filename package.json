@@ -1,6 +1,6 @@
 {
 	"name": "js-ago",
-	"version": "1.0.1",
+	"version": "1.0.2",
 	"description": "Simple time ago based on UNIX timestamps",
 	"main": "index.js",
 	"scripts": {
