@@ -5,7 +5,8 @@
 	"main": "index.js",
 	"scripts": {
 		"test": "tape tests/*.js",
-		"lint": "eslint ."
+		"lint": "eslint .",
+		"push": "yarn lint && yarn test && git push"
 	},
 	"repository": {
 		"type": "git",
@@ -28,9 +29,9 @@
 	},
 	"homepage": "https://github.com/Arvin7/js-ago#readme",
 	"devDependencies": {
-		"eslint": "^7.2.0",
+		"eslint": "^7.18.0",
 		"eslint-plugin-markdown": "^1.0.2",
-		"prettier": "^2.0.5",
-		"tape": "^5.1.0"
+		"prettier": "^2.2.1",
+		"tape": "^5.1.1"
 	}
 }
