@@ -1,14 +1,21 @@
+'use strict';
+
 /**
- * Convert UNIX timestamp to "time" ago
- * @param {int} timestamp
+ * Convert a timestamp to "time" ago
+ * @param {int|Date} timestamp
+ * @param {Object} options
+ * @param {string} options.format
  * @returns {string}
  */
-export default timestamp => {
-	const periods = ['sec', 'min', 'hour', 'day', 'week', 'month', 'year'];
-	const lengths = [60, 60, 24, 7, 4.35, 12, 10];
-
+module.exports = function js_ago(timestamp, options = { format: 'medium' }) {
+	const periods = getPeriods(options.format);
+	const lengths = [60, 60, 24, 7, 12, 10];
 	const now = new Date().getTime();
 	let diff = Math.ceil(now / 1000) - timestamp;
+
+	if (diff < 0) {
+		throw new Error('The time difference is negative. The provided timestamp is in the future.');
+	}
 
 	let i;
 	const _count = lengths.length - 1;
@@ -25,3 +32,21 @@ export default timestamp => {
 
 	return `${diff} ${periods[i]} ago`;
 };
+
+/**
+ * Get time period annotations
+ * @param {string} format
+ * @returns {string[]}
+ */
+function getPeriods(format) {
+	switch (format) {
+		case 'short':
+			return ['s', 'm', 'h', 'd', 'mo', 'y'];
+
+		case 'long':
+			return ['second', 'minute', 'hour', 'day', 'month', 'year'];
+
+		default:
+			return ['sec', 'min', 'hr', 'day', 'mon', 'yr'];
+	}
+}
