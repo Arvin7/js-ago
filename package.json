@@ -1,10 +1,12 @@
 {
 	"name": "js-ago",
-	"version": "1.0.2",
-	"description": "Simple time ago based on UNIX timestamps",
+	"version": "1.1.0",
+	"description": "Simple time ago for UNIX timestamps and JavaScript Date objects.",
 	"main": "index.js",
 	"scripts": {
-		"lint": "eslint ."
+		"test": "tape tests/*.js",
+		"lint": "eslint .",
+		"push": "yarn lint && yarn test && git push"
 	},
 	"repository": {
 		"type": "git",
@@ -18,7 +20,8 @@
 		"timeago",
 		"timestamp",
 		"unix-timestamp",
-		"timediff"
+		"timediff",
+		"date"
 	],
 	"author": "Arvin Ashtari <arvin@windesign.ir>",
 	"license": "MIT",
@@ -27,8 +30,9 @@
 	},
 	"homepage": "https://github.com/Arvin7/js-ago#readme",
 	"devDependencies": {
-		"eslint": "^7.2.0",
+		"eslint": "^7.18.0",
 		"eslint-plugin-markdown": "^1.0.2",
-		"prettier": "^2.0.5"
+		"prettier": "^2.2.1",
+		"tape": "^5.1.1"
 	}
 }
