@@ -1,7 +1,7 @@
 {
 	"name": "js-ago",
 	"version": "1.1.0",
-	"description": "Simple time ago for UNIX timestamps, Date objects and so on.",
+	"description": "Simple time ago for UNIX timestamps and JavaScript Date objects.",
 	"main": "index.js",
 	"scripts": {
 		"test": "tape tests/*.js",
@@ -20,7 +20,8 @@
 		"timeago",
 		"timestamp",
 		"unix-timestamp",
-		"timediff"
+		"timediff",
+		"date"
 	],
 	"author": "Arvin Ashtari <arvin@windesign.ir>",
 	"license": "MIT",

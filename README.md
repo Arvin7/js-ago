@@ -7,9 +7,9 @@
 ![NPM downloads](https://img.shields.io/npm/dt/js-ago)
 ![Twitter](https://img.shields.io/twitter/url?url=https%3A%2F%2Fgithub.com%2FArvin7%2Fjs-ago)
 
-Simple "time" ago for your UNIX timestamps
+Simple "time" ago for your Unix timestamps and JavaScript Date objects.
 
-### Installation
+## Installation
 
 ```shell script
 npm install js-ago
@@ -21,7 +21,25 @@ or
 yarn add js-ago
 ```
 
-## Example
+## Usage
+
+The `js_ago` function accepts two arguments: `js_ago(timestamp[, options]);`
+
+-   [required] `timestamp`: a `Date()` object or a Unix timestamp
+-   [optional] `options`: an object: `{ format: 'short' | 'medium' (_default_) | 'long' }`
+
+```javascript
+import js_ago from 'js-ago';
+// or
+// const js_ago = require('js_ago');
+
+js_ago(new Date('2020-10-17')); // 4 months ago
+
+js_ago(1611344957); // 7 secs ago
+js_ago(1611344957, { format: 'short' }); // 7s ago
+js_ago(1611344957, { format: 'medium' }); // 7 secs ago
+js_ago(1611344957, { format: 'long' }); // 7 seconds ago
+```
 
 In a React component:
 
@@ -29,40 +47,29 @@ In a React component:
 import React from 'react';
 import js_ago from 'js-ago';
 
-const Article = () => {
+export default function Article() {
 	const timestamp = 1591872078; // E.g. fetched from an API
 
 	return (
 		<article>
 			<h1>Post Title</h1>
-
 			<p>Lorem ipsum...</p>
-
-			<footer>Posted {js_ago(timestamp)}</footer>
+			<footer>Posted {js_ago(timestamp)}</footer> {/* Output: Posted 10 mins ago */}
 		</article>
 	);
-};
-
-export default Article;
+}
 ```
 
 ## Outputs
 
-Based on the timestamp you pass, you would get such results:
+As of version 1.1.0, you can pass an options object (`{format: '...'}`) to determine the output format.
 
--   [0-59] seconds ago
--   [1-59] minutes ago
--   [1-23] hours ago
--   [1-3] weeks ago
--   [1-11] months ago
--   [1-99] years ago
--   ...
-
-Therefore, this package doesn't print out something like:
-_2 hours and 14 minutes ago_
-
-## Use-case
-
-Many 😀
-
-Personally, I use this when I've written the back-end with PHP/MySQL and the dates are stored as UNIX timestamps. Then my React app fetches the data through an API and...
+| short | medium (default) | long   |
+| ----- | ---------------- | ------ |
+| s     | sec              | second |
+| m     | min              | minute |
+| h     | hr               | hour   |
+| d     | day              | day    |
+| w     | wk               | week   |
+| m     | mon              | month  |
+| y     | yr               | year   |
