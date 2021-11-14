@@ -1,5 +1,5 @@
-const test = require('tape');
-const js_ago = require('../index');
+import * as test from 'tape';
+import js_ago from '../src/index';
 
 test('should format Unix timestamps of X seconds ago with long format', t => {
 	t.equal(js_ago(getTimestamp(1, 's'), { format: 'long' }), '1 second ago');
@@ -57,13 +57,13 @@ test('should format Unix timestamps of X years ago correctly', t => {
 });
 
 test('should format Date object to time ago', t => {
-	t.equal(js_ago(new Date('2018-02-05')), '3 yrs ago');
+	t.equal(js_ago(new Date('2018-02-05')), '4 yrs ago');
 
 	t.end();
 });
 
-function getTimestamp(amount, unit) {
-	const multiply = {
+function getTimestamp(amount: number, unit: string) {
+	const multiply: Record<string, number> = {
 		m: 60,
 		h: 3600,
 		d: 86400,
