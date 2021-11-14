@@ -25,8 +25,10 @@ yarn add js-ago
 
 The `js_ago` function accepts two arguments: `js_ago(timestamp[, options]);`
 
--   [required] `timestamp`: a `Date()` object or a Unix timestamp
--   [optional] `options`: an object: `{ format: 'short' | 'medium' (_default_) | 'long' }`
+| Parameter | Required | Type       | Default                | Possible Values                                                                |
+| --------- | -------- | ---------- | ---------------------- | ------------------------------------------------------------------------------ |
+| timestamp | **yes**  | Date / Int |                        | A `Date()` object or an integer Unix timestamp                                 |
+| options   | no       | Object     | `{ format: "medium" }` | An object with the `format` property set as either "short", "medium" or "long" |
 
 ```javascript
 import js_ago from 'js-ago';
@@ -41,7 +43,7 @@ js_ago(1611344957, { format: 'medium' }); // 7 secs ago
 js_ago(1611344957, { format: 'long' }); // 7 seconds ago
 ```
 
-In a React component:
+In a **React** component:
 
 ```jsx
 import React from 'react';
@@ -54,7 +56,8 @@ export default function Article() {
 		<article>
 			<h1>Post Title</h1>
 			<p>Lorem ipsum...</p>
-			<footer>Posted {js_ago(timestamp)}</footer> {/* Output: Posted 10 mins ago */}
+			<footer>Posted {js_ago(timestamp)}</footer>
+			{/* Output: Posted 10 mins ago */}
 		</article>
 	);
 }
@@ -62,7 +65,7 @@ export default function Article() {
 
 ## Outputs
 
-As of version 1.1.0, you can pass an options object (`{format: '...'}`) to determine the output format.
+As of version 1.1.0, you can set the `format` property of the `options` passed to the function to determine the output format.
 
 | short | medium (default) | long   |
 | ----- | ---------------- | ------ |
