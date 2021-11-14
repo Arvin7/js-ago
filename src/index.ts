@@ -9,7 +9,7 @@ interface Range {
 }
 
 interface Options {
-	format: string;
+	format: 'short' | 'medium' | 'long';
 }
 
 const ranges: Range[] = [
@@ -64,7 +64,6 @@ export default function js_ago(
 
 	const isShort = options.format === 'short';
 	const plural = diff > 1 && !isShort ? 's' : '';
-	// @ts-ignore
 	const wording = range.name[options.format];
 
 	return `${diff}${isShort ? '' : ' '}${wording}${plural} ago`;
