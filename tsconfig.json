@@ -1,12 +1,14 @@
 {
-	"compilerOptions": {
-		"target": "es6",
-		"lib": ["es2016"],
-		"module": "commonjs",
-		"rootDir": "./src",
-		"declaration": true,
-		"outDir": "./dist",
-		"strict": true,
-		"skipLibCheck": true
-	}
+  "compilerOptions": {
+    "target": "es6",
+    "allowJs": false,
+    "lib": ["es2016"],
+    "module": "commonjs",
+    "rootDir": "src",
+    "declaration": true,
+    "outDir": "dist",
+    "strict": true,
+    "skipLibCheck": true
+  },
+  "exclude": ["tests", "dist"]
 }

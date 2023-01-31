@@ -1,16 +1,16 @@
 {
-	"root": true,
-	"env": {
-		"node": true
-	},
-	"extends": "eslint:recommended",
-	"parserOptions": {
-		"ecmaVersion": 6,
-		"sourceType": "module"
-	},
-	"rules": {
-		"no-unused-vars": "warn",
-		"prefer-const": "error"
-	},
-	"plugins": ["markdown"]
+  "root": true,
+  "env": {
+    "node": true
+  },
+  "extends": "eslint:recommended",
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module"
+  },
+  "rules": {
+    "no-unused-vars": "warn",
+    "prefer-const": "error"
+  },
+  "plugins": ["markdown"]
 }

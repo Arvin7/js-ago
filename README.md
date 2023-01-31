@@ -31,35 +31,35 @@ The `js_ago` function accepts two arguments: `js_ago(timestamp[, options]);`
 | options   | no       | Object     | `{ format: "medium" }` | An object with the `format` property set as either "short", "medium" or "long" |
 
 ```javascript
-import js_ago from 'js-ago';
+import js_ago from "js-ago";
 // or
 // const js_ago = require('js_ago');
 
-js_ago(new Date('2020-10-17')); // 4 months ago
+js_ago(new Date("2020-10-17")); // 4 months ago
 
 js_ago(1611344957); // 7 secs ago
-js_ago(1611344957, { format: 'short' }); // 7s ago
-js_ago(1611344957, { format: 'medium' }); // 7 secs ago
-js_ago(1611344957, { format: 'long' }); // 7 seconds ago
+js_ago(1611344957, { format: "short" }); // 7s ago
+js_ago(1611344957, { format: "medium" }); // 7 secs ago
+js_ago(1611344957, { format: "long" }); // 7 seconds ago
 ```
 
 In a **React** component:
 
 ```jsx
-import React from 'react';
-import js_ago from 'js-ago';
+import React from "react";
+import js_ago from "js-ago";
 
 export default function Article() {
-	const timestamp = 1591872078; // E.g. fetched from an API
+  const timestamp = 1591872078; // E.g. fetched from an API
 
-	return (
-		<article>
-			<h1>Post Title</h1>
-			<p>Lorem ipsum...</p>
-			<footer>Posted {js_ago(timestamp)}</footer>
-			{/* Output: Posted 10 mins ago */}
-		</article>
-	);
+  return (
+    <article>
+      <h1>Post Title</h1>
+      <p>Lorem ipsum...</p>
+      <footer>Posted {js_ago(timestamp)}</footer>
+      {/* Output: Posted 10 mins ago */}
+    </article>
+  );
 }
 ```
 
