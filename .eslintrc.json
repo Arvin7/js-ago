@@ -1,16 +1,14 @@
 {
-  "root": true,
   "env": {
-    "node": true
+    "browser": true,
+    "es2021": true
   },
-  "extends": "eslint:recommended",
+  "extends": ["eslint:recommended", "plugin:@typescript-eslint/recommended"],
+  "parser": "@typescript-eslint/parser",
   "parserOptions": {
-    "ecmaVersion": 6,
+    "ecmaVersion": "latest",
     "sourceType": "module"
   },
-  "rules": {
-    "no-unused-vars": "warn",
-    "prefer-const": "error"
-  },
-  "plugins": ["markdown"]
+  "plugins": ["@typescript-eslint", "markdown"],
+  "ignorePatterns": ["dist", "jest.config.js"]
 }
