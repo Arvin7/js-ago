@@ -21,6 +21,12 @@ or
 yarn add js-ago
 ```
 
+or
+
+```shell script
+pnpm add js-ago
+```
+
 ## Usage
 
 The `js_ago` function accepts two arguments: `js_ago(timestamp[, options]);`
@@ -76,3 +82,13 @@ As of version 1.1.0, you can set the `format` property of the `options` passed t
 | w     | wk               | week   |
 | m     | mon              | month  |
 | y     | yr               | year   |
+
+### Naming convention
+
+Although the conventional naming in JS is camelCase, due to historical reasons, the function name is `js_ago` instead of `jsAgo` 👴
+
+You can rename the method when importing it:
+
+```javascript
+import jsAgo from "js-ago";
+```
