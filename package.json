@@ -1,6 +1,6 @@
 {
   "name": "js-ago",
-  "version": "2.0.3",
+  "version": "2.1.0",
   "description": "Simple time ago for Unix timestamps and JavaScript Date objects.",
   "main": "dist/index.js",
   "scripts": {
