@@ -1,70 +1,81 @@
-interface Range {
-  min?: number;
-  max: number;
-  name: {
-    short: string;
-    medium: string;
-    long: string;
-  };
-}
+type RangeName =
+  | "seconds"
+  | "minutes"
+  | "hours"
+  | "days"
+  | "weeks"
+  | "months"
+  | "years";
 
 interface Options {
   format: "short" | "medium" | "long";
 }
 
-const ranges: Range[] = [
-  { min: 1, max: 60, name: { short: "s", medium: "sec", long: "second" } },
-  { max: 3600, name: { short: "m", medium: "min", long: "minute" } },
-  { max: 86400, name: { short: "h", medium: "hr", long: "hour" } },
-  { max: 86400 * 7, name: { short: "d", medium: "day", long: "day" } },
-  { max: 86400 * 28, name: { short: "w", medium: "wk", long: "week" } },
-  {
-    min: 86400 * 31,
-    max: 86400 * 365,
-    name: { short: "m", medium: "mon", long: "month" },
-  },
-  {
-    max: 86400 * 365 * 100,
-    name: { short: "y", medium: "yr", long: "year" },
-  },
-];
+const rangeFormats: Record<RangeName, Record<Options["format"], string>> = {
+  seconds: { short: "s", medium: "sec", long: "second" },
+  minutes: { short: "m", medium: "min", long: "minute" },
+  hours: { short: "h", medium: "hr", long: "hour" },
+  days: { short: "d", medium: "day", long: "day" },
+  weeks: { short: "w", medium: "wk", long: "week" },
+  months: { short: "m", medium: "mon", long: "month" },
+  years: { short: "y", medium: "yr", long: "year" },
+};
 
 /**
  * Converts a UNIX timestamp or Date object to "time" ago
  * @param {int|Date} timestamp
  * @param {Object} options
- * @param {string} options.format
+ * @param {"short" | "medium" | "long"} options.format
  * @returns {string}
  */
 export default function js_ago(
   timestamp: number | Date,
-  options: Options = { format: "medium" }
+  options: Options = { format: "medium" },
 ): string {
   if (!["short", "medium", "long"].includes(options.format)) {
     throw new Error("The provided format is incorrect.");
   }
 
-  const nowMs = new Date().getTime();
-  const tsDiff: number =
+  const now = new Date().getTime();
+  const tsDiff =
     timestamp instanceof Date
-      ? (nowMs - timestamp.getTime()) / 1000
-      : nowMs / 1000 - timestamp;
+      ? (now - timestamp.getTime()) / 1000
+      : now / 1000 - timestamp;
 
-  const index = ranges.findIndex((item) => item.max > tsDiff);
-  const range: Range = ranges[index];
-  const prevIndex = index - 1;
-  const min = range.min || ranges[prevIndex].max;
-  const diff = Math.ceil(tsDiff / min);
+  const seconds = Math.floor(tsDiff);
+  const minutes = Math.floor(seconds / 60);
+  const hours = Math.floor(minutes / 60);
+  const days = Math.floor(hours / 24);
+  const weeks = Math.floor(days / 7);
+  const months = Math.floor(days / 30);
+  const years = Math.floor(days / 365);
 
-  if (diff < 0) {
+  if (seconds < 0) {
     throw new Error(
-      "The time difference is negative. The provided timestamp is in the future."
+      "The time difference is negative. The provided timestamp is in the future.",
     );
+  } else if (seconds === 0) {
+    return "now";
   }
 
-  const isShort = options.format === "short";
-  const plural = diff > 1 && !isShort ? "s" : "";
-  const wording = range.name[options.format];
+  const times: Record<RangeName, number> = {
+    years,
+    months,
+    weeks,
+    days,
+    hours,
+    minutes,
+    seconds,
+  };
 
-  return `${diff}${isShort ? "" : " "}${wording}${plural} ago`;
+  const key =
+    (Object.keys(times) as RangeName[]).find((item) => times[item] > 0) ||
+    "seconds";
+  const amount = times[key];
+
+  const isShort = options.format === "short";
+  const plural = amount > 1 && !isShort ? "s" : "";
+  const wording = rangeFormats[key][options.format];
+
+  return `${amount}${isShort ? "" : " "}${wording}${plural} ago`;
 }
