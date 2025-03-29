@@ -1,4 +1,6 @@
-import js_ago from "../src/index";
+import { describe, expect, it } from "vitest";
+
+import js_ago from "./index";
 
 it('should format Unix timestamps of "now"', () => {
   expect(js_ago(new Date())).toEqual("now");
@@ -53,7 +55,7 @@ it("should format Unix timestamps of X years ago correctly", () => {
 });
 
 it("should format Date object to time ago", () => {
-  expect(js_ago(new Date("2018-02-05"))).toEqual("6 yrs ago");
+  expect(js_ago(new Date("2018-02-05"))).toEqual("7 yrs ago");
 });
 
 describe("Invalid inputs", () => {

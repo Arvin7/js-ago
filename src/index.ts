@@ -69,7 +69,7 @@ export default function js_ago(
   };
 
   const key =
-    (Object.keys(times) as RangeName[]).find((item) => times[item] > 0) ||
+    (Object.keys(times) as Array<RangeName>).find((item) => times[item] > 0) ||
     "seconds";
   const amount = times[key];
 
