@@ -10,5 +10,5 @@
     "strict": true,
     "skipLibCheck": true
   },
-  "exclude": ["tests", "dist"]
+  "exclude": ["dist", "vitest.config.ts", "src/*.test.ts"]
 }
