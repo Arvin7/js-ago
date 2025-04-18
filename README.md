@@ -7,7 +7,7 @@
 ![NPM downloads](https://img.shields.io/npm/dt/js-ago)
 ![Twitter](https://img.shields.io/twitter/url?url=https%3A%2F%2Fgithub.com%2FArvin7%2Fjs-ago)
 
-Simple "time" ago for your Unix timestamps and JavaScript Date objects.
+Simple "time" ago for your JavaScript Date objects.
 
 ## Installation
 
@@ -18,52 +18,45 @@ npm install js-ago
 or
 
 ```shell script
-yarn add js-ago
-```
-
-or
-
-```shell script
 pnpm add js-ago
 ```
 
 ## Usage
 
-The `js_ago` function accepts two arguments: `js_ago(timestamp[, options]);`
+The `jsAgo` function accepts two arguments: `jsAgo(timestamp[, options]);`
 
-| Parameter | Required | Type       | Default                | Possible Values                                                                |
-| --------- | -------- | ---------- | ---------------------- | ------------------------------------------------------------------------------ |
-| timestamp | **yes**  | Date / Int |                        | A `Date()` object or an integer Unix timestamp                                 |
-| options   | no       | Object     | `{ format: "medium" }` | An object with the `format` property set as either "short", "medium" or "long" |
+| Parameter | Required | Type                                                                      | Default                                                   | Possible Values                                                                                                                                                                                                                             |
+| --------- | -------- | ------------------------------------------------------------------------- | --------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| timestamp | **yes**  | `Date`                                                                    |                                                           | A `Date()` object                                                                                                                                                                                                                           |
+| options   | no       | `{ locale: Intl.LocalesArgument, style: "narrow" \|  "short" \| "long" }` | `{ locale: "en-US", style: "narrow", numeric: "always" }` | An optional object to set the locale, style and [other options](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/RelativeTimeFormat/RelativeTimeFormat#options) accepted by `Intl.RelativeTimeFormat`. |
 
 ```javascript
-import js_ago from "js-ago";
+import { jsAgo } from "js-ago";
 // or
-// const js_ago = require('js_ago');
+// const { jsAgo } = require('js-ago');
 
-js_ago(new Date("2020-10-17")); // 4 months ago
+jsAgo(new Date("2024-03-16")); // 10mo ago
 
-js_ago(1611344957); // 7 secs ago
-js_ago(1611344957, { format: "short" }); // 7s ago
-js_ago(1611344957, { format: "medium" }); // 7 secs ago
-js_ago(1611344957, { format: "long" }); // 7 seconds ago
+jsAgo(new Date("2024-03-16", { style: "short" })); // 10 mon. ago
+
+jsAgo(new Date("2024-03-16"), { style: "long" }); // 10 months ago
 ```
 
 In a **React** component:
 
 ```jsx
 import React from "react";
-import js_ago from "js-ago";
+import { jsAgo } from "js-ago";
 
-export default function Article() {
-  const timestamp = 1591872078; // E.g. fetched from an API
+export function Article() {
+  const dateInApiResponse = "2025-03-16T06:17:54.662Z";
+  const createdAt = jsAgo(new Date(dateInApiResponse));
 
   return (
     <article>
       <h1>Post Title</h1>
       <p>Lorem ipsum...</p>
-      <footer>Posted {js_ago(timestamp)}</footer>
-      {/* Output: Posted 10 mins ago */}
+      <footer>Posted {createdAt}</footer> {/* Output: Posted 8m ago */}
     </article>
   );
 }
@@ -71,24 +64,15 @@ export default function Article() {
 
 ## Outputs
 
-As of version 1.1.0, you can set the `format` property of the `options` passed to the function to determine the output format.
+As of version 3.0.0, you can pass different locale and get localised output.
+The default locale (`en-US`) will output:
 
-| short | medium (default) | long   |
-| ----- | ---------------- | ------ |
-| s     | sec              | second |
-| m     | min              | minute |
-| h     | hr               | hour   |
-| d     | day              | day    |
-| w     | wk               | week   |
-| m     | mon              | month  |
-| y     | yr               | year   |
-
-### Naming convention
-
-Although the conventional naming in JS is camelCase, due to historical reasons, the function name is `js_ago` instead of `jsAgo` 👴
-
-You can rename the method when importing it:
-
-```javascript
-import jsAgo from "js-ago";
-```
+| narrow (default) | short | long   |
+| ---------------- | ----- | ------ |
+| s                | sec.  | second |
+| m                | min.  | minute |
+| h                | hr.   | hour   |
+| d                | day   | day    |
+| w                | wk.   | week   |
+| mo               | mo.   | month  |
+| y                | yr.   | year   |
