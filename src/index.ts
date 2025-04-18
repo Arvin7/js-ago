@@ -1,4 +1,4 @@
-type RangeName =
+type TimeUnit =
   | "seconds"
   | "minutes"
   | "hours"
@@ -7,42 +7,28 @@ type RangeName =
   | "months"
   | "years";
 
-interface Options {
-  format: "short" | "medium" | "long";
-}
-
-const rangeFormats: Record<RangeName, Record<Options["format"], string>> = {
-  seconds: { short: "s", medium: "sec", long: "second" },
-  minutes: { short: "m", medium: "min", long: "minute" },
-  hours: { short: "h", medium: "hr", long: "hour" },
-  days: { short: "d", medium: "day", long: "day" },
-  weeks: { short: "w", medium: "wk", long: "week" },
-  months: { short: "m", medium: "mon", long: "month" },
-  years: { short: "y", medium: "yr", long: "year" },
-};
-
 /**
- * Converts a UNIX timestamp or Date object to "time" ago
- * @param {int|Date} timestamp
- * @param {Object} options
- * @param {"short" | "medium" | "long"} options.format
+ * Converts a JavaScript Date object to "time ago"
+ * @param {Date} timestamp
+ * @param {Intl.RelativeTimeFormatOptions & Intl.LocalesArgument} options
+ * @example "5 hours ago"
+ * @example "5h ago"
  * @returns {string}
  */
-export default function js_ago(
-  timestamp: number | Date,
-  options: Options = { format: "medium" },
+export function jsAgo(
+  timestamp: Date,
+  options?: Partial<Intl.RelativeTimeFormatOptions> & {
+    locale?: Intl.LocalesArgument;
+  },
 ): string {
-  if (!["short", "medium", "long"].includes(options.format)) {
-    throw new Error("The provided format is incorrect.");
+  const now = new Date().getTime();
+  const tsDiff = now - timestamp.getTime();
+
+  if (tsDiff < 999) {
+    return "now";
   }
 
-  const now = new Date().getTime();
-  const tsDiff =
-    timestamp instanceof Date
-      ? (now - timestamp.getTime()) / 1000
-      : now / 1000 - timestamp;
-
-  const seconds = Math.floor(tsDiff);
+  const seconds = Math.floor(tsDiff / 1000);
   const minutes = Math.floor(seconds / 60);
   const hours = Math.floor(minutes / 60);
   const days = Math.floor(hours / 24);
@@ -50,15 +36,7 @@ export default function js_ago(
   const months = Math.floor(days / 30);
   const years = Math.floor(days / 365);
 
-  if (seconds < 0) {
-    throw new Error(
-      "The time difference is negative. The provided timestamp is in the future.",
-    );
-  } else if (seconds === 0) {
-    return "now";
-  }
-
-  const times: Record<RangeName, number> = {
+  const preDuration: Record<TimeUnit, number> = {
     years,
     months,
     weeks,
@@ -68,14 +46,31 @@ export default function js_ago(
     seconds,
   };
 
-  const key =
-    (Object.keys(times) as Array<RangeName>).find((item) => times[item] > 0) ||
-    "seconds";
-  const amount = times[key];
+  let duration: {
+    unit: Intl.RelativeTimeFormatUnit;
+    value: number;
+  } = {
+    unit: "seconds",
+    value: 0,
+  };
 
-  const isShort = options.format === "short";
-  const plural = amount > 1 && !isShort ? "s" : "";
-  const wording = rangeFormats[key][options.format];
+  for (const k in preDuration) {
+    const key = k as TimeUnit;
 
-  return `${amount}${isShort ? "" : " "}${wording}${plural} ago`;
+    if (preDuration[key] > 0) {
+      duration = {
+        unit: key,
+        value: preDuration[key],
+      };
+      break;
+    }
+  }
+
+  const rtf = new Intl.RelativeTimeFormat(options?.locale || "en-US", {
+    style: options?.style || "narrow",
+    numeric: options?.numeric || "always",
+    localeMatcher: options?.localeMatcher,
+  });
+
+  return rtf.format(duration.value * -1, duration.unit);
 }
