@@ -37,7 +37,7 @@ import { jsAgo } from "js-ago";
 
 jsAgo(new Date("2024-03-16")); // 10mo ago
 
-jsAgo(new Date("2024-03-16", { style: "short" })); // 10 mon. ago
+jsAgo(new Date("2024-03-16"), { style: "short" }); // 10 mon. ago
 
 jsAgo(new Date("2024-03-16"), { style: "long" }); // 10 months ago
 ```
